@@ -1,0 +1,5 @@
+({
+    searchRecords : function(component, searchString) {
+       
+    }
+})

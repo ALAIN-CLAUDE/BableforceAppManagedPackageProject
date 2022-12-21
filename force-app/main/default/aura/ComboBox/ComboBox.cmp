@@ -1,0 +1,86 @@
+<aura:component  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <!-- attributes to be received from parent component-->
+    <aura:attribute name="label" type="String" />
+    <aura:attribute name="objectApiName" type="String" />
+    <aura:attribute name="idFieldApiName" type="String" />
+    <aura:attribute name="valueFieldApiName" type="String" />
+    <aura:attribute name="extendedWhereClause" type="String" />
+    <aura:attribute name="maxRecords" type="Integer" default="10"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="openAccountPopup" type="Boolean" default="false" />
+    <aura:method name="sampleMethod" action="{!c.doAction}" description="Sample method with parameters"/> 
+    <!-- Attributes specific to component-->
+    <aura:attribute name="results" type="List" default="[
+    {'label': 'https://apps.babelforce.com/babelconnect', 'value': 'https://apps.babelforce.com/babelconnect'},
+    {'label': 'https://apps.us-east.babelforce.com/babelconnect', 'value': 'https://apps.us-east.babelforce.com/babelconnect'},
+    {'label': 'https://apps.ap-southeast.babelforce.com/babelconnect', 'value': 'https://apps.ap-southeast.babelforce.com/babelconnect'},
+    ]"/>
+    <aura:attribute name="openDropDown" type="Boolean" default="false" />
+    <aura:attribute name="selectedOption" type="String" />
+    <aura:attribute name="inputValue" type="String" />
+    <aura:attribute name="inputSearchFunction" type="Object" />
+    <!--<aura:registerEvent name="DivEvent" type="c:AutoToDivEvent" />-->
+    <aura:method name="eventListener" action="{!c.addEventListener}" access="PUBLIC"/> 
+    <div class="slds-form-element" onclick="{!c.addEventListener}" id="droptest">
+        <label class="slds-form-element__label" for="combobox-id-21">Select Region</label>
+         <lightning:helptext content="Help text for region."/>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="{! v.openDropDown ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click'}"
+                     aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                        <aura:if isTrue="{! empty(v.selectedOption)}">
+                            <span class="slds-icon_container slds-input__icon_left slds-icon-utility-search slds-input__icon">
+                                <lightning:formattedText value="https://apps."/>
+                            </span>
+                            <aura:set attribute="else">
+                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_left">
+									<lightning:icon iconName="standard:link" size="x-small" />
+                                </span>
+                            </aura:set>
+                        </aura:if>
+                        
+                        <input type="text"
+                               class="slds-input slds-combobox__input slds-combobox__input-value"
+                               id="combobox-id-21" aria-autocomplete="list" aria-controls="listbox-id-11"
+                               autoComplete="off" onclick="{!c.searchHandler}" role="textbox" placeholder="Select Region"
+                               value="{!v.inputValue}" aura:id="comboboxComp" onchange="{!c.searchString}" style="{! empty(v.selectedOption)? 'padding-left: 100px;':'pointer-events: none;'}"/>                       
+                        <aura:if isTrue="{! empty(v.selectedOption)}">
+                            <span class="slds-icon_container slds-input__icon_right slds-icon-utility-search slds-input__icon">
+                                <lightning:formattedText value=".babelforce.com/babelconnect/#/app"  style="margin-left: -215px;"/>
+                            </span>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+                                        title="Clear the text input" onclick="{!c.clearOption}">
+                                    <lightning:icon iconName="utility:clear" size="x-small" />
+                                </button>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div id="listbox-id-11" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                         role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <aura:iteration items="{!v.results}" var="result">
+                                <li role="presentation" class="slds-listbox__item" data-id="{!result.label}"
+                                    data-value="{!result.value}" onclick="{!c.optionClickHandler}">
+                                    <div id="{!result.label}"
+                                         class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                         role="option">
+                                        <span class="slds-media__figure slds-listbox__option-icon ">
+                                            <lightning:icon iconName="standard:link" alternativeText="Account Name" size="small" class="slds-m-right_x-small"/>
+                                        </span>
+                                        <span class="slds-media__body">
+                                            <span class="slds-truncate" title="All Stark Companies">
+                                                <span>{!result.label}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

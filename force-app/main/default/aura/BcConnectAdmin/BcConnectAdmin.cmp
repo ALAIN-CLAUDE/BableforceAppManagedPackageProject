@@ -1,0 +1,67 @@
+<aura:component implements="force:appHostable" controller="BcConnectAdminController">
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInt}"></aura:handler>
+    <aura:attribute name="config" type="object"/>
+    <aura:attribute name="region" type="String"/>
+    <aura:attribute name="inputValueLink" type="String" default="https://apps.babelforce.com/babelconnect" />
+    <aura:attribute name="defaultUrl" type="String" default="https://apps.{}.babelforce.com/babelconnect"/>
+    <!-- task creation checkbox group related atributes -->
+    <aura:attribute name="taskCreationOptions" type="List" default="[
+                                                                    {'label': 'Auto create new contact/lead upon inbound/outbound call', 'value': 'CreateLeadForNewCall'},
+                                                                    {'label': 'Auto create task with assigned contact for any inbound call', 'value': 'CreateTaskForInboundCall'},
+                                                                    {'label': 'Auto create task with assigned contact for any outbound call', 'value': 'CreateTaskForOutboundCall'}
+                                                                    ]"/>
+    
+    <aura:attribute name="taskCreationValues" type="List"/>
+    
+    <!-- task creation checkbox group related atributes -->
+    
+    <aura:attribute name="clickToDialOptions" type="List" default="[
+                                                                   {'label': 'Click-to-call directly (open dialer and calls directly)', 'value': 'CallDirectly'},
+                                                                   {'label': 'Click-to-call indirectly (opens dialer and prefills the outbound number)', 'value': 'PrefillNumber'}
+                                                                   ]"/>
+    <aura:attribute name="clickToDialValue" type="String"/>
+    
+    <aura:handler event="lightning:tabCreated" action="{! c.onTabCreated }"/>
+    
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium" >BcConnect Admin Setup</h4>
+    </div>
+    
+    <div class="slds-modal__content">
+        <div style="padding: 1rem;max-height: 450px; height: calc(100vh - 260px);overflow-y: auto;">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title="Salesforce Settings">Salesforce Settings</span>
+                </h3>
+                
+                <div aria-hidden="false" class="slds-section__content slds-p-around_large">
+                    <div class="slds-form">
+   					<div class="slds-form-element slds-form-element_stacked">
+                        <lightning:input value="{!v.inputValueLink}" label="Environment" />
+				   </div>
+                        <lightning:input aura:id="regionInput" name="input1"  variant="label-hidden" value="{!v.config.Region}" class="slds-hide"/>
+                        <!-- End ComboBox Region -->
+                        
+                        <div class="slds-form-element slds-form-element_stacked">
+                            <lightning:input aura:id="leadNameInput" name="leadNameInput" label="New Lead Name" value="{!v.config.NewLeadName}"/>
+                        </div>
+                        <div class="slds-form-element slds-form-element_stacked">
+                            <lightning:checkboxGroup aura:id="taskCreationInput" name="Event handling" label="Event handling" value="{!v.taskCreationValues}" options="{! v.taskCreationOptions }" />
+                        </div>
+                        
+                        <div class="slds-form-element slds-form-element_stacked">
+                            <lightning:radioGroup aura:id="clickToDialInput" name="radioGroup" label="Click-to-call" options="{! v.clickToDialOptions }" value="{! v.clickToDialValue }" type="radio"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-modal__footer modal-footer" >
+        <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.updateConfigs}"/>
+    </div>
+    
+    
+</aura:component>

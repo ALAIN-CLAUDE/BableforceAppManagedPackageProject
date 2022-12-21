@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false" >
+    <apex:includeScript value="{!$Resource.sForceOpenCti}"/>
+    <apex:includeLightning />
+    <div id="LightningContainer" />
+    
+    <script>
+    
+    $Lightning.use("bableforce:BabelForceDialerApp", function() {
+        $Lightning.createComponent("bableforce:BableForceDialer", { },"LightningContainer",function(cmp) {
+             
+        });
+    });
+    </script>
+    
+</apex:page>
