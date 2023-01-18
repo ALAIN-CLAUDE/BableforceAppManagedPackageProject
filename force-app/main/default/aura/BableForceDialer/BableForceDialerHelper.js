@@ -1,7 +1,12 @@
 ({
     handleEventsFromIframe : function(component,newEvent) {
+        //console.log('Url recieved');
+        //console.log(newEvent.context.mostRecentUrl);
         let lastUrl = component.get('v.lasturl');
-
+        
+        //console.log('Url we have');
+        //console.log(lastUrl);
+        
         if(newEvent.event == 'babelconnect.init'){
             //bableconnect initialised code goes here.......
             this.handleSoftPhoneInitialisation(component,newEvent);
@@ -14,8 +19,10 @@
             this.handleSoftPhoneUserLoggingOff(component,newEvent);
             
         }else if(newEvent.event == 'babelconnect.cti.call'){
-            //whenever an inbound or outbound call is made using bableConnect CTI.
+            //whenever an inbound or outbound call is made using babbleconnect CTI.
+            //if(newEvent.context.mostRecentUrl == lastUrl){
             	this.handleSoftPhoneCall(component,newEvent);
+           // }
         }
     },
     
@@ -39,7 +46,9 @@
     //This method will be called whenever a user loggs out of the softphone.
     handleSoftPhoneUserLoggingOff : function(component,newEvent) {
         sforce.opencti.disableClickToDial({
-            callback: function() {}  
+            callback: function() {
+                console.log('changed');
+            }  
         });
     },
     
@@ -70,7 +79,7 @@
     //preFillNumber parameter decides if it will only prefill the number or call it.
     handleClickToDial : function(component,PhoneNumber, preFillNumber){
         var vfWindow = component.find("vfFrame").getElement().contentWindow;
-        
+        var vfOrigin =component.get("v.ifameUrlWithRegion");///newly added
         // start click2call by sending an event
         vfWindow.postMessage({
             type: 'connect',
@@ -80,12 +89,13 @@
                 to: PhoneNumber,
                 dial : preFillNumber
             }
-        }, "*");
+        }, vfOrigin);
     },
     
     // Called where there is a call made or recieved by the dialer.
     handleSoftPhoneCall : function(component, newEvent){
         var self = this;
+        console.log(newEvent);
         if(newEvent.data && newEvent.data.call){
             let callInfo = newEvent.data.call;
             let configs = component.get('v.config');
@@ -97,6 +107,7 @@
                 
             }else if(callInfo.type == 'inbound' && callInfo.state == 'in-progress'){
                // when a new call is recieved in salesforce..
+               console.log('going to handle inbound call.');
                 self.handleInboundCall(component, callInfo, configs);
             }
         }
@@ -107,6 +118,7 @@
     // Called where there is an outbound call is in progress.
     handleOutboundCall : function(component, callInfo, configs){
         //Process outbound call only if we have an outbound call in "in-Progree" state as we recieve different call events for all states of a call.
+        console.log('task creation allowed == '+configs.CreateTaskForOutboundCall);
         if(configs.CreateTaskForOutboundCall){
             // if task creation is configured for outbound call, we create a new task and open the detail page for that task.
             this.callApextoCreateTask(component,callInfo);
@@ -136,6 +148,8 @@
     },
     
     callApextoCreateTask : function(component, callInfo){
+		debugger;
+        console.log('apexmethodcalled');
         $A.getCallback(function() {
             var createTaskAction = component.get("c.createNewTask");
             
@@ -147,6 +161,7 @@
             createTaskAction.setCallback(this, function(response){
                 if(response.getState() === "SUCCESS"){
                     var result = response.getReturnValue();
+                    console.log(result);
                     if(result.startsWith('00T')){
                         
                         sforce.opencti.screenPop({
@@ -167,6 +182,7 @@
     
     //this method will get the contact or lead id using apex, when create a task option is not selected.
     callApextogetParentRecord : function(component, callInfo){
+        debugger;
         let clientNumber = callInfo.type == 'inbound' ? callInfo.from : callInfo.to ;
         $A.getCallback(function() {
             var findRecordAction = component.get("c.findSobjectRecords");
@@ -180,8 +196,9 @@
             findRecordAction.setCallback(this, function(response){
                 if(response.getState() === "SUCCESS"){
                     var result = response.getReturnValue();
-                   
+                    console.log(result);
                     if(result.startsWith('00Q') || result.startsWith('003')){
+                        console.log('result confirmed as contact or lead.');
                         
                         sforce.opencti.screenPop({
                             type : sforce.opencti.SCREENPOP_TYPE.SOBJECT,
@@ -194,6 +211,7 @@
             });
         
         
+            console.log('in get callback for recxord');
             $A.enqueueAction(findRecordAction); 
         })();
     }
