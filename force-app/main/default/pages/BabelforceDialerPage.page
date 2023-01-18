@@ -5,8 +5,8 @@
     
     <script>
     
-    $Lightning.use("bableforce:BabelForceDialerApp", function() {
-        $Lightning.createComponent("bableforce:BableForceDialer", { },"LightningContainer",function(cmp) {
+    $Lightning.use("babelConnect:BabelForceDialerApp", function() {
+        $Lightning.createComponent("babelConnect:BableForceDialer", { },"LightningContainer",function(cmp) {
              
         });
     });

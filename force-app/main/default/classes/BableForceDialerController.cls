@@ -36,17 +36,14 @@ public class BableForceDialerController {
     //Methods creates a new task after seraching for record in salesofrce. It either finds a lead or contact and creates a task for it.
     @AuraEnabled
     Public Static string createNewTask(string callInformation,string currentSetUrlForComponent){
-        System.debug('currentSetUrlForComponent == '+currentSetUrlForComponent);
         String OriginalCallInformation = callInformation;
-            system.debug('callInformation=====> '+callInformation);
         //get the last focused url from custom setting and compare it with currentSetUrlForComponent to decide if task needs to be created.
         bcConnectConfig__c mc = bcConnectConfig__c.getValues('bcConnectConfigs');
         
-        if(String.isNotBlank(callInformation) /*&& mc.LastFocusedUrl__c == currentSetUrlForComponent*/){
+        if(String.isNotBlank(callInformation)){
             callInformation=callInformation.replace('"from"','"from_x"');
             
             callParameters callInfo=(callParameters)JSON.deserialize(callInformation, callParameters.class);
-            system.debug('callInfo=====> '+json.serialize(callInfo));
             string clienPhoneNumber = callInfo.type == 'inbound' ? callInfo.from_x : callInfo.to ;
             //find the parent record in salesforce
             String ParentId = BableForceDialerController.findSobjectRecords(OriginalCallInformation,clienPhoneNumber,currentSetUrlForComponent);
@@ -93,7 +90,7 @@ public class BableForceDialerController {
     @AuraEnabled
     public Static String findSobjectRecords(string callInformation,String phoneNumber,string currentSetUrlForComponent){
         bcConnectConfig__c mc = bcConnectConfig__c.getValues('bcConnectConfigs');
-        if(String.isNotBlank(phoneNumber) /*&& mc.LastFocusedUrl__c == currentSetUrlForComponent*/){
+        if(String.isNotBlank(phoneNumber)){
             phoneNumber=phoneNumber.replaceAll('[^0-9]', '');
             System.debug('phoneNumber==>'+phoneNumber);
             List<List<SObject>> searchList = [FIND :phoneNumber IN PHONE FIELDS RETURNING Lead(id order by createdDate desc limit 1), Contact(id order by createdDate desc limit 1)];

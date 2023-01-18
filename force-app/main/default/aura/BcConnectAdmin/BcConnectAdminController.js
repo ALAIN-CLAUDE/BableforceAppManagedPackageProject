@@ -40,7 +40,7 @@
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('opened tab size == '+response.length);
             for(let i=0;i<response.length;i++){
-                if (response[i].url.indexOf('bableforce__babelConnect_Admin_Setup') > -1) {
+                if (response[i].url.indexOf('babelConnect__babelConnect_Admin_Setup') > -1) {
                     workspaceAPI.setTabLabel({
                         tabId: response[i].tabId,
                         label: "babelConnect Admin Setup"
@@ -49,15 +49,14 @@
             }
         })
         .catch(function(error) {
-            console.log(error);
-        });
+         });
     },
     onTabCreated : function(component, event, helper) {
         var workspaceAPI = component.find("workspace");
         workspaceAPI.getAllTabInfo().then(function(response) {
             console.log('opened tab size == '+response.length);
             for(let i=0;i<response.length;i++){
-                if (response[i].url.indexOf('bableforce__babelConnect_Admin_Setup') > -1) {
+                if (response[i].url.indexOf('babelConnect__babelConnect_Admin_Setup') > -1) {
                     workspaceAPI.setTabLabel({
                         tabId: response[i].tabId,
                         label: "babelConnect Admin Setup"

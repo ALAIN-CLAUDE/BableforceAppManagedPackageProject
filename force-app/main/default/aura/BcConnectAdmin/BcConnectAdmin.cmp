@@ -25,7 +25,7 @@
     <aura:handler event="lightning:tabCreated" action="{! c.onTabCreated }"/>
     
     <div class="modal-header slds-modal__header slds-size_1-of-1">
-        <h4 class="title slds-text-heading--medium" >BcConnect Admin Setup</h4>
+        <h4 class="title slds-text-heading--medium" >babelConnect Admin Setup</h4>
     </div>
     
     <div class="slds-modal__content">

@@ -3,12 +3,10 @@
                 access="global" >
     <aura:registerEvent name="sampleComponentEvent" type="c:callServerSideMethods"/>
 	<aura:handler name="sampleComponentEvent" event="c:callServerSideMethods" action="{!c.handleEVent}"/>
-
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" ></aura:handler>
     <aura:attribute name="ifameUrlWithRegion" type="string"/>
     <aura:attribute name="config" type="object"/>
     <aura:attribute name="lasturl" type="string"/>
     <aura:attribute name ="mostrecenturl" type="string" default=""/>
     <iframe aura:id="vfFrame" src="{!v.ifameUrlWithRegion}"/> 
-    <!-- <button class="slds-button" onclick="{!c.demomethod}">demo</button> -->
 </aura:component>
