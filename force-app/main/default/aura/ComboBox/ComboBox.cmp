@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-17-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <aura:component  implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
     <!-- attributes to be received from parent component-->
     <aura:attribute name="label" type="String" />
@@ -10,11 +17,7 @@
     <aura:attribute name="openAccountPopup" type="Boolean" default="false" />
     <aura:method name="sampleMethod" action="{!c.doAction}" description="Sample method with parameters"/> 
     <!-- Attributes specific to component-->
-    <aura:attribute name="results" type="List" default="[
-    {'label': 'https://apps.babelforce.com/babelconnect', 'value': 'https://apps.babelforce.com/babelconnect'},
-    {'label': 'https://apps.us-east.babelforce.com/babelconnect', 'value': 'https://apps.us-east.babelforce.com/babelconnect'},
-    {'label': 'https://apps.ap-southeast.babelforce.com/babelconnect', 'value': 'https://apps.ap-southeast.babelforce.com/babelconnect'},
-    ]"/>
+   
     <aura:attribute name="openDropDown" type="Boolean" default="false" />
     <aura:attribute name="selectedOption" type="String" />
     <aura:attribute name="inputValue" type="String" />
