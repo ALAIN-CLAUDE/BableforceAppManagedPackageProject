@@ -15,7 +15,7 @@
                         let data=JSON.parse(JSON.stringify(payload));
                         component.set('v.lasturl',data.url);
                         var vfWindow = component.find("vfFrame").getElement().contentWindow;
-                         var vfOrigin =component.get("v.ifameUrlWithRegion");///newly added
+                        var vfOrigin =component.get("v.ifameUrlWithRegion");
                         vfWindow.postMessage({
                             type: 'connect',
                             module: 'context',
@@ -35,12 +35,9 @@
     },
     
     demomethod : function(component, event, helper) {
-        console.log(component.get('v.lasturl'));
     },
     
     handleEVent : function(component, event, helper) {
-        console.log('handleEVent==>'+ event.getParam("callInformation"));
         component.set('v.mostrecenturl',event.getParam("callInformation"));
-        console.log('handleEVent '+ component.get('v.mostrecenturl'));
     }
 })

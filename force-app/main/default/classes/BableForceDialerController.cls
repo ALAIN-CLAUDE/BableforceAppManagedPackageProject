@@ -110,7 +110,7 @@ public class BableForceDialerController {
                         callInformation=callInformation.replace('"from"','"from_x"');
                         
                         callParameters callInfo=(callParameters)JSON.deserialize(callInformation, callParameters.class);
-                        
+                        system.debug('==============> '+Json.serializePretty(callInfo));
                         Lead lead = new Lead();
                         lead.Company='Default Company';
                         
@@ -123,6 +123,7 @@ public class BableForceDialerController {
                         lead.Phone= callInfo.type == 'inbound' ? callInfo.from_x : callInfo.to ;
                         try{
                             insert lead;
+                            system.debug('inserted lead idss=======> '+lead.Id);
                             return lead.id;
                         }catch(exception e){
                             return e.getMessage();
