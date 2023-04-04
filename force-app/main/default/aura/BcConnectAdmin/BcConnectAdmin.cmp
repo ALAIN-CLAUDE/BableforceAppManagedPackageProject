@@ -5,12 +5,6 @@
     <aura:attribute name="region" type="String"/>
     <aura:attribute name="inputValueLink" type="String" default="https://apps.babelforce.com/babelconnect" />
     <aura:attribute name="defaultUrl" type="String" default="https://apps.{}.babelforce.com/babelconnect"/>
-    <!-- task creation checkbox group related atributes -->
-    <aura:attribute name="taskCreationOptions" type="List" default="[
-                                                                    {'label': 'Auto create new contact/lead upon inbound/outbound call', 'value': 'CreateLeadForNewCall'},
-                                                                    {'label': 'Auto create task with assigned contact for any inbound call', 'value': 'CreateTaskForInboundCall'},
-                                                                    {'label': 'Auto create task with assigned contact for any outbound call', 'value': 'CreateTaskForOutboundCall'}
-                                                                    ]"/>
     
     <aura:attribute name="taskCreationValues" type="List"/>
     
@@ -46,10 +40,16 @@
                         <div class="slds-form-element slds-form-element_stacked">
                             <lightning:input aura:id="leadNameInput" name="leadNameInput" label="New Lead Name" value="{!v.config.NewLeadName}"/>
                         </div>
+               
                         <div class="slds-form-element slds-form-element_stacked">
-                            <lightning:checkboxGroup aura:id="taskCreationInput" name="Event handling" label="Event handling" value="{!v.taskCreationValues}" options="{! v.taskCreationOptions }" />
+                             <lightning:input type="checkbox" label="Auto create new contact/lead upon inbound/outbound call" name="input2" checked="{!v.config.CreateLeadForNewCall}" />
                         </div>
-                        
+                           <div class="slds-form-element slds-form-element_stacked">
+                             <lightning:input type="checkbox" label="Auto create task with assigned contact for any inbound call" name="input2" checked="{!v.config.CreateTaskForInboundCall}" />
+                        </div>
+                           <div class="slds-form-element slds-form-element_stacked">
+                             <lightning:input type="checkbox" label="Auto create task with assigned contact for any outbound call" name="input2" checked="{!v.config.CreateTaskForOutboundCall}" />
+                        </div>
                         <div class="slds-form-element slds-form-element_stacked">
                             <lightning:radioGroup aura:id="clickToDialInput" name="radioGroup" label="Click-to-call" options="{! v.clickToDialOptions }" value="{! v.clickToDialValue }" type="radio"/>
                         </div>

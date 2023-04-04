@@ -28,7 +28,7 @@ public class BableForceDialerControllerTest {
         mc.babelConnect__Create_Lead_Upon_Call__c = true;
          update mc;
         BableForceDialerController.createNewTask('{"id":"444","from_x":"9999999999","to":"9999999999","state":"scheduled","type":"inbound"}','test');
-   		System.assertEquals('testName', 'testName');
+        Assert.areEqual('testName', 'testName');
     }
     static testMethod void testMethod222() {
         BableForceDialerController Bfc = new BableForceDialerController();
@@ -38,20 +38,20 @@ public class BableForceDialerControllerTest {
         mc.babelConnect__Create_Lead_Upon_Call__c = true;
          update mc;
         BableForceDialerController.createNewTask('{"id":"444","from_x":"9999999999","to":"9999999999","state":"scheduled","type":"inbound"}','test');
-   		System.assertEquals('testName', 'testName');
+   		Assert.areEqual('testName', 'testName');
     }
     static testMethod void testMethod1() {
         BableForceDialerController Bfc = new BableForceDialerController();
         BableForceDialerController.getBcConnectConfigs();
         BableForceDialerController.createNewTask('{"id":"444","from_x":"","to":"","state":"scheduled","type":"inbound"}','test');
-        System.assertEquals('testName', 'testName');
+        Assert.areEqual('testName', 'testName');
     }
     static testMethod void testMethod123() {
         bcConnectConfig__c mc = bcConnectConfig__c.getValues('bcConnectConfigs');
         delete mc;
         BableForceDialerController Bfc = new BableForceDialerController();
         BableForceDialerController.getBcConnectConfigs();
-        System.assertEquals('testName', 'testName');
+        Assert.areEqual('testName', 'testName');
     }
 
     

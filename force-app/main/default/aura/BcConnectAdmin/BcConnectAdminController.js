@@ -38,7 +38,6 @@
 
         var workspaceAPI = component.find("workspace");
         workspaceAPI.getAllTabInfo().then(function(response) {
-            console.log('opened tab size == '+response.length);
             for(let i=0;i<response.length;i++){
                 if (response[i].url.indexOf('babelConnect__babelConnect_Admin_Setup') > -1) {
                     workspaceAPI.setTabLabel({
@@ -54,7 +53,6 @@
     onTabCreated : function(component, event, helper) {
         var workspaceAPI = component.find("workspace");
         workspaceAPI.getAllTabInfo().then(function(response) {
-            console.log('opened tab size == '+response.length);
             for(let i=0;i<response.length;i++){
                 if (response[i].url.indexOf('babelConnect__babelConnect_Admin_Setup') > -1) {
                     workspaceAPI.setTabLabel({
@@ -82,22 +80,7 @@
         if(leadNameInput.get('v.value')){
             configs.NewLeadName = leadNameInput.get('v.value');
         }
-        
-        var taskCreationInput = component.find('taskCreationInput');
-        var selectedInputs = taskCreationInput.get('v.value');
-        configs.CreateTaskForInboundCall = false;
-        configs.CreateTaskForOutboundCall = false;
-        configs.CreateLeadForNewCall = false;
-        for(let i=0;i<selectedInputs.length;i++){
-            if(selectedInputs[i] == 'CreateTaskForInboundCall'){
-                configs.CreateTaskForInboundCall = true;
-            }else if(selectedInputs[i] == 'CreateTaskForOutboundCall'){
-                configs.CreateTaskForOutboundCall = true;
-            }else if(selectedInputs[i] == 'CreateLeadForNewCall'){
-                configs.CreateLeadForNewCall = true;
-            }
-        }
-        
+      
         var clickToDialInput = component.find('clickToDialInput');
         if(clickToDialInput.get('v.value')){
             if(clickToDialInput.get('v.value') == 'CallDirectly'){
@@ -115,7 +98,6 @@
         
         action.setCallback(this, function(response){
             if(response.getState() === 'SUCCESS'){
-                console.log(response.getReturnValue());
                 var toastEvent = $A.get("e.force:showToast");
                 if(response.getReturnValue() == 'ConfigsUpdatedSuccessfully'){
                     toastEvent.setParams({

@@ -1,4 +1,4 @@
-public class BableForceDialerController {
+public without sharing class BableForceDialerController {
     @AuraEnabled
     Public Static bcConnectconfig getBcConnectConfigs(){
         bcConnectconfig configs=new bcConnectconfig();
@@ -92,9 +92,9 @@ public class BableForceDialerController {
         bcConnectConfig__c mc = bcConnectConfig__c.getValues('bcConnectConfigs');
         if(String.isNotBlank(phoneNumber)){
             phoneNumber=phoneNumber.replaceAll('[^0-9]', '');
-            System.debug('phoneNumber==>'+phoneNumber);
+            
             List<List<SObject>> searchList = [FIND :phoneNumber IN PHONE FIELDS RETURNING Lead(id order by createdDate desc limit 1), Contact(id order by createdDate desc limit 1)];
-            System.debug('phoneNumber==>'+searchList);
+            
             List<Lead> leads = (List<Lead>)searchList[0];
             List<Contact> Contacts = (List<Contact>)searchList[1];
             
@@ -110,7 +110,7 @@ public class BableForceDialerController {
                         callInformation=callInformation.replace('"from"','"from_x"');
                         
                         callParameters callInfo=(callParameters)JSON.deserialize(callInformation, callParameters.class);
-                        system.debug('==============> '+Json.serializePretty(callInfo));
+                        
                         Lead lead = new Lead();
                         lead.Company='Default Company';
                         
@@ -121,9 +121,9 @@ public class BableForceDialerController {
                         }
                         
                         lead.Phone= callInfo.type == 'inbound' ? callInfo.from_x : callInfo.to ;
+                        
                         try{
                             insert lead;
-                            system.debug('inserted lead idss=======> '+lead.Id);
                             return lead.id;
                         }catch(exception e){
                             return e.getMessage();

@@ -1,4 +1,5 @@
 <apex:page showHeader="false" sidebar="false" >
+    
     <apex:includeScript value="{!$Resource.sForceOpenCti}"/>
     <apex:includeLightning />
     <div id="LightningContainer" />

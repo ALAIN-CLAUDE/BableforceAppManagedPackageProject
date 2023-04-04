@@ -18,6 +18,6 @@ public class BcConnectAdminControllerTest {
         BcConnectAdminController.getBcConnectConfigs();
         BcConnectAdminController.updateBcConnectConfigs('{"Region":"444","CreateTaskForInboundCall":true,"CreateTaskForOutboundCall":true,"OpenDialerAndPrefillOutboundNumber":true}');
 		BcConnectAdminController.updateBcConnectConfigs(null);
-		System.assertEquals('testName', 'testName');
+		Assert.areEqual('testName', 'testName');
     }
 }

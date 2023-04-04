@@ -70,7 +70,7 @@
     //preFillNumber parameter decides if it will only prefill the number or call it.
     handleClickToDial : function(component,PhoneNumber, preFillNumber){
         var vfWindow = component.find("vfFrame").getElement().contentWindow;
-        var vfOrigin =component.get("v.ifameUrlWithRegion");
+        var vfOrigin = component.get("v.ifameUrlWithRegion");
         // start click2call by sending an event
         vfWindow.postMessage({
             type: 'connect',
