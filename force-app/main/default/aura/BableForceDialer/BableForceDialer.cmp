@@ -1,7 +1,7 @@
 <aura:component controller="BableForceDialerController" 
                 implements="force:appHostable,flexipage:availableForAllPageTypes" 
                 access="global" >
-    <ltng:require scripts="/support/api/50.0/lightning/opencti_min.js" ></ltng:require>
+    <ltng:require scripts="/support/api/56.0/lightning/opencti_min.js" ></ltng:require>
     <aura:registerEvent name="sampleComponentEvent" type="c:callServerSideMethods"/>
 	<aura:handler name="sampleComponentEvent" event="c:callServerSideMethods" action="{!c.handleEVent}"/>
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" ></aura:handler>
